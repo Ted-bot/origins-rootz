@@ -1,0 +1,196 @@
+/**
+ * The following styles get applied both on the front of your site
+ * and in the editor.
+ *
+ * Replace them with your own styles or remove the file completely.
+ */
+
+.wp-block-create-block-parallax-images-component-interactivity {
+	font-size: 1em;
+	// background: #ffff001a;
+	padding: 1em;
+	border: none;
+	// height: 100vh;
+
+	.svg {
+		position: absolute;
+		width: 0;
+		height: 0;
+		top: 0;
+		left: 0;
+		bottom: 0;
+		right: 0;
+		display: block;
+		// vertical-align: middle;
+	}
+
+	.hero-component {
+		display: flex;
+		flex-direction: row;
+		justify-content: center;
+		align-items: center;
+		gap: 2em;
+		padding: 1em;
+		background: #fff;
+		// border: 1px solid #ccc;
+		border-radius: 8px;
+
+		.hero-component__container {
+			display: flex;
+			// flex-direction: row;
+			justify-content: center;
+			align-items: center;
+			gap: 2em;
+
+			@media (min-width: 781px) {
+				flex-direction: row;
+			}
+
+			@media (max-width: 780px) {
+				flex-direction: column;
+			}
+
+			.hero-component__text-container {
+				// flex-grow: 1;
+
+				// @media (min-width: 1024px) {
+				// 	width: 33%;
+				// }
+				
+				// @media (max-width: 780px) {
+				// 	width: 66%;
+				// }
+				
+				@media (min-width: 481px) {
+					width: 66%;
+				}
+
+				@media (max-width: 480px) {
+					width: 100%;
+				}
+			}
+			
+			.hero-component__image-container {
+				// flex-grow: 2;
+				// flex-direction: row;
+				// overflow:hidden;
+				top:90px;				
+			
+				div {
+					display:flex;
+					// padding-bottom: 8rem;
+					height: auto;
+					width: 100%;
+					gap: 2em;
+
+					@media (min-width: 1280px) {
+						padding-bottom: 8rem;
+					}
+
+					@media (min-width: 1024px) {
+						padding-bottom: 15rem;
+					}
+
+					@media (min-width: 768px) {
+						padding-bottom: 8rem;
+					}
+
+					@media (min-width: 481px) {
+						padding-bottom: 6rem;
+					}
+
+					@media screen and (max-width: 480px) {
+						padding-bottom: 2rem;	
+						// flex-direction: column;			
+					}
+					
+					div {
+
+						// width: 100%;
+						// height:auto;
+						// overflow: hidden;
+
+						@media (min-width: 1024px) {
+							width: 324px;
+							height: 525px;
+						}
+
+						@media (min-width: 768px) {
+							width: 324px;
+							height: 375px;
+							// flex-direction: column;
+						}
+
+						@media (min-width: 480px) {
+							max-width: 324px;
+							height: 425px;
+						}
+						
+						@media screen and (max-width: 479px) {
+							max-width: 375px;
+							height: 250px;		
+						}
+
+						img {
+							// width: 324px;
+							// height: 525px;
+							// display: block;
+    						// vertical-align: middle;
+							object-fit: cover;
+							height: 150%;
+							width: 100%;
+							// position: absolute;
+							top: unset;
+							bottom: 0;
+							right: 0;
+							left: 0;
+	
+							
+						}
+
+					}
+					
+
+					
+
+					// .image-1 {
+
+						// img {
+						// 	width: 100%;
+						// 	height: auto;
+						// 	object-fit: cover;
+						// }
+
+					// }
+
+					.image-2 {
+						top: 90px;
+
+						// img {
+						// 	width: 100%;
+						// 	height: auto;
+						// 	object-fit: cover;
+						// }
+
+					}
+				}
+			}
+	
+		}		
+	}
+
+	&.dark-theme {
+		background: #333;
+		color: #fff;
+
+		button {
+			background: #555;
+			color: #fff;
+			border: 1px solid #777;
+		}
+
+		p {
+			color: #ddd;
+		}
+	}
+}

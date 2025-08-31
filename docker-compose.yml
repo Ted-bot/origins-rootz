@@ -1,0 +1,40 @@
+services: 
+  db: 
+    platform: linux/amd64/v8
+    image: mysql:5.7
+    environment: 
+      MYSQL_ROOT_PASSWORD: rub01OriginsRootz
+      MYSQL_DATABASE: origins_rootz_db
+      MYSQL_USER: rub01OriginsRootz
+      MYSQL_PASSWORD: rub01OriginsRootz
+    restart: always
+    volumes: 
+      - ./db_data:/var/lib/mysql
+
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin
+    environment:
+      PMA_HOST: db
+      MYSQL_ROOT_PASSWORD: rub01OriginsRootz
+    ports:
+      - '8081:80'
+    restart: always
+    depends_on:
+      - db
+
+  wordpress:
+    image: wordpress:6.8.2-php8.2-apache
+    ports:
+      - '8080:80'
+    environment:
+      WORDPRESS_DB_HOST: db:3306
+      WORDPRESS_DB_USER: rub01OriginsRootz
+      WORDPRESS_DB_PASSWORD: rub01OriginsRootz
+      WORDPRESS_DB_NAME: origins_rootz_db
+      WORDPRESS_DEBUG: true
+    volumes:
+      - ./:/var/www/html
+      # - ./wp-content:/var/www/html/wp-content
+    restart: always
+    depends_on:
+      - db

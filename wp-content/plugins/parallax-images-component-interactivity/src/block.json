@@ -1,0 +1,20 @@
+{
+	"$schema": "https://schemas.wp.org/trunk/block.json",
+	"apiVersion": 3,
+	"name": "create-block/parallax-images-component-interactivity",
+	"version": "0.1.0",
+	"title": "Parallax Images Component",
+	"category": "widgets",
+	"icon": "media-interactive",
+	"description": "A parallax component for images with interactivity api.",
+	"example": {},
+	"supports": {
+		"interactivity": true
+	},
+	"textdomain": "parallax-images-component-interactivity",
+	"editorScript": "file:./index.js",
+	"editorStyle": "file:./index.css",
+	"style": "file:./style-index.css",
+	"render": "file:./render.php",
+	"viewScriptModule": "file:./view.js"
+}

@@ -1,0 +1,158 @@
+/**
+ * The following styles get applied both on the front of your site
+ * and in the editor.
+ *
+ * Replace them with your own styles or remove the file completely.
+ */
+
+.wp-block-create-block-tkay-hero-component {
+	font-size: 1em;
+	padding: 1em;
+
+	.hero-component {
+		gap: 2em;
+		background: #fff;
+
+		.small-image-and-text {
+			display: flex;		
+			flex-direction: column;
+
+			@media (min-width: 991px){
+				flex: 0 0 calc(100% / 2);
+			}
+
+			@media (max-width: 990px){
+				flex: 0 0 100%;
+			}			
+			
+			div:nth-child(2n+1) {
+				flex: 0 0 calc(100% / 2);
+				width: 100%;
+				height: 100%;
+				
+				img {
+					border-radius: 10px;
+					object-fit: cover;
+					width: 100%;
+				}
+
+			}
+
+			div:nth-child(2n) {
+				display: flex;
+				flex-direction: column;
+				width: 100%;
+				height: 100%;
+				border-radius: 10px;
+				
+				div:nth-child(2n+1) {
+					display: flex;
+					flex-direction: column;
+					text-align: center;
+
+					h3 {
+						padding-bottom: 0px;
+						margin-bottom: 0px;
+					}					
+				}
+
+				div:nth-child(2n) {					
+					display: flex;       /* use flexbox */
+					flex-direction: column;
+					text-align: center;
+					margin-bottom: 1em;
+					
+					p {
+						margin-top: 0px;
+					}
+				}
+				
+			}
+		}
+			
+		.big-image {
+			overflow: hidden;
+			border-radius: 10px;
+			object-fit: contain;
+			position: relative;
+
+			.action-button {
+				top: 1em;
+				right: 1em;
+				display: flex;
+				position: absolute;
+				align-items: center;
+				justify-content: center;
+
+				a { 
+					display: flex;
+					top: 0;
+					right: 0;
+					align-items: center;
+					justify-content: center;
+					width: 100px;
+					height: 100px;
+
+					.pointer-img {
+						position: relative;
+						width: 35px;
+						height: 35px;
+						z-index: 20;
+					}
+
+					.rotate-img {
+						position: absolute;
+						width: 100%;
+						height: 100%;
+						z-index: 10;
+						-webkit-transition: all 0.5s ease-in-out;
+						-moz-transition: all 0.5s ease-in-out;
+						-o-transition: all 0.5s ease-in-out;
+						transition: all 0.5s ease-in-out;
+						animation: spin 12s linear infinite;
+					}
+
+					@keyframes spin {
+						from {
+							transform: rotate(0deg);
+						}
+						to {
+							transform: rotate(-360deg);
+						}
+					}
+				}
+			}
+			
+			.main-image {
+				border-radius: 10px;
+				object-fit: cover;
+				width: 100%;
+				height: 100%;
+			}
+
+			@media (min-width: 991px){
+				flex: 0 0 calc(100% / 2);
+			}
+
+			@media (max-width: 990px){
+				flex: 0 0 100%;
+			}
+		}
+
+	}
+
+	&.dark-theme {
+		background: #333;
+		color: #fff;
+
+		button {
+			background: #555;
+			color: #fff;
+			border: 1px solid #777;
+		}
+
+		p {
+			color: #ddd;
+		}
+	}
+}
