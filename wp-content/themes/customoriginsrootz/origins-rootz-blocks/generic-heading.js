@@ -26,7 +26,7 @@ function EditComponent({attributes, setAttributes}){
         setAttributes({textAligment: value})
     }
 
-    console.log({attributes})
+    // console.log({attributes})
     return (
         <>
             <BlockControls>

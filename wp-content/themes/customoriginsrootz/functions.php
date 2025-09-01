@@ -206,33 +206,40 @@ class JSXBlock {
 
   public $name = '';
   public $renderCallback = null;
+  public $data = null;
   
-  function __construct($name, $renderCallback = null) {
+  function __construct($name, $renderCallback = null, $data = null) {
     $this->name = $name;
+    $this->data = $data;
     $this->renderCallback = $renderCallback;
     add_action('init',[$this,'onInit']);
   }   
 
-  function originsRootzCallback($attributes, $content) {
+  function originsRootzRenderCallback($attributes, $content) {
     ob_start();
     require get_theme_file_path("/origins-rootz-blocks/{$this->name}.php");
     return ob_get_clean();
   }
 
   function onInit(){
+    wp_register_script($this->name, get_stylesheet_directory_uri() . "/build/{$this->name}.js", array('wp-blocks', 'wp-editor'));
+    
+    if($this->data) {
+      wp_localize_script($this->name, $this->name, $this->data);
+    }
+    
     $originsRootzArguments = array(
       'editor_script' => $this->name
     );
 
     if($this->renderCallback){
-      $originsRootzArguments['render_callback'] = [$this, 'originsRootzCallback'];
+      $originsRootzArguments['render_callback'] = [$this, 'originsRootzRenderCallback'];
     }
 
-    wp_register_script($this->name, get_stylesheet_directory_uri() . "/build/{$this->name}.js", array('wp-blocks', 'wp-editor'));
       register_block_type("originsrootzblocktheme/{$this->name}", $originsRootzArguments);
   }
 }
 
-new JSXBlock('hero-banner', true);
+new JSXBlock('hero-banner', true, ['fallbackimage' => get_theme_file_uri('/images/back-to-school-hero-1.jpg')]);
 new JSXBlock('generic-heading');
 new JSXBlock('generic-button');

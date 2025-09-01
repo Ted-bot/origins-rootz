@@ -54,7 +54,7 @@ function EditComponent({attributes, setAttributes}){
         return color.name == attributes.colorName
     }).color
 
-    console.log({attributes})
+    // console.log({attributes})
     return (
         <>
             <BlockControls>

@@ -261,9 +261,8 @@ function EditComponent({
   const currentColorValue = _inc_originsRootzColors__WEBPACK_IMPORTED_MODULE_4__["default"].filter(color => {
     return color.name == attributes.colorName;
   }).color;
-  console.log({
-    attributes
-  });
+
+  // console.log({attributes})
   return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.Fragment, {
     children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_3__.BlockControls, {
       children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_3__.AlignmentToolbar, {

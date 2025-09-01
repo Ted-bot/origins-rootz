@@ -1,9 +1,7 @@
 import { Button, PanelBody, PanelRow } from "@wordpress/components"
 import { InnerBlocks, InspectorControls, MediaUpload, MediaUploadCheck } from "@wordpress/block-editor"
-import apiFetch from "@wordpress/api-fetch"
 import { useEffect} from "@wordpress/element"
-import { useSelect } from '@wordpress/data';
-import { get } from 'lodash';
+import { useSelect } from '@wordpress/data'
 
 
 wp.blocks.registerBlockType("originsrootzblocktheme/hero-banner", {
@@ -22,15 +20,17 @@ wp.blocks.registerBlockType("originsrootzblocktheme/hero-banner", {
 function EditComponent({attributes, setAttributes}){
 
     const imgUrlOne = useSelect((select) => {
-        const media = select('core').getMedia(attributes.imgID_One);
-        console.log({media_img_1: media})
-        return media?.source_url || '';
+        console.log({media_img_1: attributes.imgID_One})
+        const defaultImage = "https://cdn11.bigcommerce.com/s-8466dwhhql/images/stencil/original/image-manager/back-to-school-hero-1.jpg?t=1756248689"
+        const media = select('core').getMedia(attributes.imgID_One)
+        return media?.source_url || defaultImage
     }, [attributes.imgID_One]);
 
     const imgUrlTwo = useSelect((select) => {
-        const media = select('core').getMedia(attributes.imgID_Two);
-        console.log({media_img_2: media})
-        return media?.source_url || '';
+        const defaultImage = "https://cdn11.bigcommerce.com/s-8466dwhhql/images/stencil/original/image-manager/back-to-school-hero-2.jpg?t=1756248717"
+        console.log({media_img_2: attributes.imgID_Two})
+        const media = select('core').getMedia(attributes.imgID_Two)
+        return media?.source_url || defaultImage
     }, [attributes.imgID_Two]);
     
     useEffect( () => {
@@ -40,10 +40,11 @@ function EditComponent({attributes, setAttributes}){
         }})
 
         if (imgUrlOne && imgUrlOne !== attributes.imgUrl_One) {
-            setAttributes({ imgUrl_One: imgUrlOne });
+            setAttributes({ imgUrl_One: imgUrlOne })
         }
+
         if (imgUrlTwo && imgUrlTwo !== attributes.imgUrl_Two) {
-            setAttributes({ imgUrl_Two: imgUrlTwo });
+            setAttributes({ imgUrl_Two: imgUrlTwo })
         }
     },[attributes.imgID_One, attributes.imgID_Two ])
 
@@ -92,7 +93,7 @@ function EditComponent({attributes, setAttributes}){
                     <div> 
                         <img 
                             class=""
-                            src={attributes.imgUrl_One ?? "https://cdn11.bigcommerce.com/s-8466dwhhql/images/stencil/original/image-manager/back-to-school-hero-1.jpg?t=1756248689"}
+                            src={`${imgUrlOne}`}
                         />
                     </div>
                     <div>
@@ -111,7 +112,7 @@ function EditComponent({attributes, setAttributes}){
                     </div>
                     <img
                         class="main-image"
-                        src={ attributes.imgUrl_Two ?? "https://cdn11.bigcommerce.com/s-8466dwhhql/images/stencil/original/image-manager/back-to-school-hero-2.jpg?t=1756248717"}
+                        src={`${imgUrlTwo}`}
                     />
                 </div>
             </div>
