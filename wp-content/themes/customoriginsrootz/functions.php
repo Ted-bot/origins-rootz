@@ -192,14 +192,14 @@ function makeNotePrivate($data, $postarr) {
   return $data;
 }
 
-// function heroBannerBlock() {
-//   wp_register_script('heroBannerBlockScript', get_stylesheet_directory_uri() . '/build/hero-banner.js', array('wp-blocks', 'wp-editor'));
-//   register_block_type("originsrootzblocktheme/hero-banner", array(
-//     'editor_script' => 'heroBannerBlockScript'
+// function herobannerBlock() {
+//   wp_register_script('herobannerBlockScript', get_stylesheet_directory_uri() . '/build/herobanner.js', array('wp-blocks', 'wp-editor'));
+//   register_block_type("originsrootzblocktheme/herobanner", array(
+//     'editor_script' => 'herobannerBlockScript'
 //   ));
 // }
 
-// add_action('init', 'heroBannerBlock');
+// add_action('init', 'herobannerBlock');
 
 
 class JSXBlock {
@@ -240,6 +240,6 @@ class JSXBlock {
   }
 }
 
-new JSXBlock('hero-banner', true, ['fallbackimage' => get_theme_file_uri('/images/back-to-school-hero-1.jpg')]);
+new JSXBlock('herobanner', true, ['fallbackimage' => get_theme_file_uri('/images/bear.jpg')]);
 new JSXBlock('generic-heading');
 new JSXBlock('generic-button');

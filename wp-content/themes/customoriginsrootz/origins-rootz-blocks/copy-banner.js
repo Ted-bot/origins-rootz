@@ -1,4 +1,4 @@
-wp.blocks.registerBlockType("originsrootzblocktheme/hero-banner", {
+wp.blocks.registerBlockType("originsrootzblocktheme/herobanner", {
     title: "Banner",
     edit: EditComponent,
     save: SaveComponent
