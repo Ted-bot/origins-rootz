@@ -84,7 +84,8 @@ function university_features() {
   add_theme_support('post-thumbnails');
   add_image_size('professorLandscape', 400, 260, true);
   add_image_size('professorPortrait', 480, 650, true);
-  add_image_size('pageBanner', 1500, 350, true);
+  add_image_size('pageBannerOne', 1500, 350, true);
+  add_image_size('pageBannerTwo', 1500, 350, true);
   add_theme_support('editor-styles');
   add_editor_style(array('https://fonts.googleapis.com/css?family=Roboto+Condensed:300,300i,400,400i,700,700i|Roboto:100,300,400,400i,700,700i', 'build/style-index.css', 'build/index.css'));
 }
@@ -204,20 +205,34 @@ function makeNotePrivate($data, $postarr) {
 class JSXBlock {
 
   public $name = '';
+  public $renderCallback = null;
   
-  function __construct($name) {
+  function __construct($name, $renderCallback = null) {
     $this->name = $name;
+    $this->renderCallback = $renderCallback;
     add_action('init',[$this,'onInit']);
+  }   
+
+  function originsRootzCallback($attributes, $content) {
+    ob_start();
+    require get_theme_file_path("/origins-rootz-blocks/{$this->name}.php");
+    return ob_get_clean();
   }
 
   function onInit(){
-    wp_register_script($this->name, get_stylesheet_directory_uri() . "/build/{$this->name}.js", array('wp-blocks', 'wp-editor'));
-      register_block_type("originsrootzblocktheme/{$this->name}", array(
+    $originsRootzArguments = array(
       'editor_script' => $this->name
-    ));
+    );
+
+    if($this->renderCallback){
+      $originsRootzArguments['render_callback'] = [$this, 'originsRootzCallback'];
+    }
+
+    wp_register_script($this->name, get_stylesheet_directory_uri() . "/build/{$this->name}.js", array('wp-blocks', 'wp-editor'));
+      register_block_type("originsrootzblocktheme/{$this->name}", $originsRootzArguments);
   }
 }
 
-new JSXBlock('hero-banner');
+new JSXBlock('hero-banner', true);
 new JSXBlock('generic-heading');
 new JSXBlock('generic-button');
