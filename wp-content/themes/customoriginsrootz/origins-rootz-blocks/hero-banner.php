@@ -1,10 +1,19 @@
+<?php
+    if(!isset($attributes['imgUrl_One'])){
+        $attributes['imgUrl_One'] = 'https://cdn11.bigcommerce.com/s-8466dwhhql/images/stencil/original/image-manager/back-to-school-hero-1.jpg?t=1756248689';
+    }
+    if(!isset($attributes['imgUrl_Two'])){
+        $attributes['imgUrl_Two'] = 'https://cdn11.bigcommerce.com/s-8466dwhhql/images/stencil/original/image-manager/back-to-school-hero-1.jpg?t=1756248689';
+    }
+?>
+
 <!-- <?php echo get_theme_file_uri('https://cdn11.bigcommerce.com/s-8466dwhhql/images/stencil/original/image-manager/back-to-school-hero-1.jpg?t=1756248689' ) ?> -->
 <div class="hero-component container">
     <div class="small-image-and-text">
         <div> 
             <img 
                 class=""
-                src="https://cdn11.bigcommerce.com/s-8466dwhhql/images/stencil/original/image-manager/back-to-school-hero-1.jpg?t=1756248689"
+                src="<?php echo $attributes['imgUrl_One'] ?>"
             />
         </div>
         <div>
@@ -23,7 +32,7 @@
         </div>
         <img
             class="main-image"
-            src="https://cdn11.bigcommerce.com/s-8466dwhhql/images/stencil/original/image-manager/back-to-school-hero-2.jpg?t=1756248717"
+            src="<?php echo $attributes['imgUrl_Two'] ?>"
         />
     </div>
 </div>
