@@ -201,6 +201,18 @@ function makeNotePrivate($data, $postarr) {
 
 // add_action('init', 'herobannerBlock');
 
+// You can keep your block theme, but create a child theme that adds back PHP templates only for WooCommerce pages.
+add_filter('template_include', function ($template) {
+    if (is_shop() || is_product_category() || is_product()) {
+        // Force WooCommerce to use classic PHP template
+        $classic_template = get_stylesheet_directory() . '/woocommerce/archive-product.php';
+        if (file_exists($classic_template)) {
+            return $classic_template;
+        }
+    }
+    return $template;
+});
+
 
 class JSXBlock {
 

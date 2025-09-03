@@ -50,6 +50,16 @@ class Show_Template_File_Name {
 		add_action( 'wp_enqueue_scripts', array( &$this, 'add_current_template_js' ), 9999 );
 	}
 
+	private function is_woocommerce_php_template() {
+		if ( function_exists( 'is_woocommerce' ) && is_woocommerce() ) {
+			global $template;
+			if ( $template && strpos( $template, 'woocommerce' ) !== false ) {
+				return true;
+			}
+		}
+		return false;
+	}
+
 	public function show_template_file_name_on_top( $wp_admin_bar ) {
 		if ( is_admin() || ! is_super_admin() ) {
 			return;
@@ -59,7 +69,7 @@ class Show_Template_File_Name {
 
 		$template_relative_path = str_replace( ABSPATH . 'wp-content/', '', $template ?? '' );
 
-		if ( wp_is_block_theme() ) {
+		if ( wp_is_block_theme() && ! $this->is_woocommerce_php_template() ) {
 			$template_file_name = __( '!!Block Theme!!', 'show-current-template' );
 			$site_editor_url    = admin_url( 'site-editor.php' );
 			$block_theme_notice = sprintf(
@@ -94,9 +104,10 @@ class Show_Template_File_Name {
 					. $current_theme_name . ' (' . __( 'NOT a child theme', 'show-current-template' ) . ')';
 		}
 
-		if ( ! wp_is_block_theme() ) {
+		if ( ! wp_is_block_theme() || $this->is_woocommerce_php_template()  ) {
 			$included_files      = get_included_files();
 			$included_files_list = '';
+			// print_r([ "included files" => $included_files]);
 			sort( $included_files );
 			foreach ( $included_files as $filename ) {
 				if ( strstr( $filename, 'themes' ) ) {
@@ -108,6 +119,8 @@ class Show_Template_File_Name {
 					}
 				}
 			}
+
+			print_r([ "included files listed" => $included_files_list]);
 
 			$admin_bar_dropdown_menu = __( 'Also, below template files are included:', 'show-current-template' )
 			. '<br /><ul id="included-files-list">'
@@ -123,7 +136,7 @@ class Show_Template_File_Name {
 
 		$wp_admin_bar->add_node( $args );
 
-		if ( wp_is_block_theme() ) {
+		if ( wp_is_block_theme() && ! $this->is_woocommerce_php_template() ) {
 			$wp_admin_bar->add_menu(
 				array(
 					'parent' => 'show_template_file_name_on_top',
@@ -159,7 +172,11 @@ class Show_Template_File_Name {
 	}
 
 	public function get_included_files_at_footr() {
-		if ( is_admin() || ! is_super_admin() || wp_is_block_theme() ) {
+		if ( is_admin() || ! is_super_admin() ) {
+			return;
+		}
+
+		if ( wp_is_block_theme() && ! $this->is_woocommerce_php_template() ) {
 			return;
 		}
 
