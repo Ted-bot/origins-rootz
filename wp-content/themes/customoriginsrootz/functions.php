@@ -7,6 +7,8 @@ require get_theme_file_path('/inc/search-route.php');
 function origins_rootz_load_scripts() {
     wp_enqueue_style('origins-rootz-style', get_stylesheet_uri(), array(), filemtime(get_template_directory() . '/style.css'), 'all');
     wp_enqueue_style('google-fonts', 'https://fonts.googleapis.com/css2?family=Quicksand:wght@400&display=swap', array(), null);
+    wp_enqueue_style( 'bootstrap-css', get_template_directory_uri() . '/css/bootstrap.min.css' );
+
     wp_enqueue_script('dropdown', get_template_directory_uri() . '/js/dropdown.js', array('jquery'), '1.0', true);
 }
 add_action('wp_enqueue_scripts', 'origins_rootz_load_scripts');
@@ -62,7 +64,7 @@ function pageBanner($args = NULL) {
   </div>
 <?php }
 
-function university_files() {
+function universal_files() {
   wp_enqueue_script('googleMap', '//maps.googleapis.com/maps/api/js?key=AIzaSyDin3iGCdZ7RPomFLyb2yqFERhs55dmfTI', [], '1.0', true);
   wp_enqueue_script('main-university-js', get_theme_file_uri('/build/index.js'), array('jquery'), '1.0', true);
   wp_enqueue_style('custom-google-fonts', '//fonts.googleapis.com/css?family=Roboto+Condensed:300,300i,400,400i,700,700i|Roboto:100,300,400,400i,700,700i');
@@ -77,11 +79,23 @@ function university_files() {
 
 }
 
-add_action('wp_enqueue_scripts', 'university_files');
+add_action('wp_enqueue_scripts', 'universal_files');
 
-function university_features() {
+function universal_features() {
   add_theme_support('title-tag');
   add_theme_support('post-thumbnails');
+
+  add_theme_support('woocommerce', array(
+    "thumbnail_image_width" => 200,
+    // "gallery_thumbnail_image_width" => 200,
+    // "single_image_width" => 200
+    "product_grid" => array(
+      "default_columns" => 2,
+      "min_columns" => 2,
+      "max_columns" => 3,
+    )
+  ));
+
   add_image_size('professorLandscape', 400, 260, true);
   add_image_size('professorPortrait', 480, 650, true);
   add_image_size('pageBannerOne', 1500, 350, true);
@@ -90,7 +104,15 @@ function university_features() {
   add_editor_style(array('https://fonts.googleapis.com/css?family=Roboto+Condensed:300,300i,400,400i,700,700i|Roboto:100,300,400,400i,700,700i', 'build/style-index.css', 'build/index.css'));
 }
 
-add_action('after_setup_theme', 'university_features');
+add_action('after_setup_theme', 'universal_features');
+
+add_filter('woocommerce_get_image_size_thumbnail', function($size) {
+    return [
+        'width'  => 300,
+        'height' => 300,
+        'crop'   => 1,
+    ];
+});
 
 function university_adjust_queries($query) {
   if (!is_admin() AND is_post_type_archive('campus') AND $query->is_main_query()) {
@@ -192,6 +214,65 @@ function makeNotePrivate($data, $postarr) {
   return $data;
 }
 
+// Woocommerce content settings
+remove_action("woocommerce_sidebar", "woocommerce_get_sidebar");
+
+
+function open_container_column_grid(){
+  echo "<div class='container'><div class='row'>";
+}
+
+add_action("woocommerce_before_main_content", "open_container_column_grid", 2);
+
+function close_container_column_grid(){
+  echo "</div>";
+}
+
+add_action("woocommerce_after_main_content", "close_container_column_grid", 9);
+
+
+function open_sidebar_column_grid(){
+  echo "<div class='col-sm-4'>";
+}
+
+add_action("woocommerce_before_main_content", "open_sidebar_column_grid", 3);
+
+function origins_rootz_woocommerce_widgets_init() {
+    register_sidebar( array(
+        'name'          => __( 'Shop Sidebar', 'origins_rootz_woocommerce' ),
+        'id'            => 'shop-sidebar',
+        'description'   => __( 'Add widgets here.', 'origins_rootz_woocommerce' ),
+        'before_widget' => '<section id="%1$s" class="widget %2$s">',
+        'after_widget'  => '</section>',
+        'before_title'  => '<h2 class="widget-title">',
+        'after_title'   => '</h2>',
+    ) );
+}
+
+add_action( 'widgets_init', 'origins_rootz_woocommerce_widgets_init', 4);
+
+add_action("woocommerce_before_main_content", "woocommerce_get_sidebar", 5);
+
+function close_sidebar_column_grid(){
+  echo "</div>";
+}
+
+add_action("woocommerce_before_main_content", "close_sidebar_column_grid", 6);
+
+function open_main_content_column_grid(){
+  echo "<div class='col-sm-8'>";
+}
+
+add_action("woocommerce_before_main_content", "open_main_content_column_grid", 7);
+
+function close_main_content_column_grid(){
+  echo "</div></div>";
+}
+
+add_action("woocommerce_after_main_content", "close_main_content_column_grid", 8);
+
+
+
 // function herobannerBlock() {
 //   wp_register_script('herobannerBlockScript', get_stylesheet_directory_uri() . '/build/herobanner.js', array('wp-blocks', 'wp-editor'));
 //   register_block_type("originsrootzblocktheme/herobanner", array(
@@ -201,7 +282,8 @@ function makeNotePrivate($data, $postarr) {
 
 // add_action('init', 'herobannerBlock');
 
-// You can keep your block theme, but create a child theme that adds back PHP templates only for WooCommerce pages.
+
+// With this you can keep your block theme, but create a child theme that adds back PHP templates only for WooCommerce pages.
 add_filter('template_include', function ($template) {
     if (is_shop() || is_product_category() || is_product()) {
         // Force WooCommerce to use classic PHP template
@@ -213,7 +295,7 @@ add_filter('template_include', function ($template) {
     return $template;
 });
 
-
+// JSX block defines a block for the editor and user/public page
 class JSXBlock {
 
   public $name = '';

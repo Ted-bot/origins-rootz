@@ -36,6 +36,14 @@ Tags: one-column, custom-menu, custom-logo, editor-style, featured-images, full-
     line-height: 1.15; /* 1 */
     -webkit-text-size-adjust: 100%; /* 2 */
   }
+
+  .shop-sidebar {
+    width: 100% !important;
+  }
+/* .woocommerce ul.products li.product a img {
+  width: 150px;
+  height: auto;
+} */
   
   /* Sections
      ========================================================================== */

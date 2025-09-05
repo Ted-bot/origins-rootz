@@ -120,8 +120,6 @@ class Show_Template_File_Name {
 				}
 			}
 
-			print_r([ "included files listed" => $included_files_list]);
-
 			$admin_bar_dropdown_menu = __( 'Also, below template files are included:', 'show-current-template' )
 			. '<br /><ul id="included-files-list">'
 			. $included_files_list
